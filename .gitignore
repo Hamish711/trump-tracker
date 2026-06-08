@@ -2,6 +2,9 @@
 __pycache__/
 *.pyc
 
+# The dashboard is generated fresh each time — no need to store it.
+dashboard.html
+
 # Your PRIVATE ntfy topic. Kept off GitHub so strangers can't spam your
 # phone. On the cloud we pass it via a GitHub Secret instead.
 ntfy_topic.txt
