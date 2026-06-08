@@ -1,0 +1,53 @@
+# GitHub Actions workflow — runs the news check on a schedule, in the cloud.
+# This file replaces step4_loop.py when running on GitHub: instead of one
+# long-running loop, GitHub triggers ONE check every few minutes.
+
+name: Trump Stock Monitor
+
+on:
+  schedule:
+    # Cron syntax: "*/5 * * * *" = every 5 minutes (the GitHub minimum).
+    # GitHub may delay scheduled runs a bit under load — fine for us, since
+    # the rallies last days.
+    - cron: "*/5 * * * *"
+  # Lets you also trigger a run by hand from the GitHub website (handy for
+  # testing without waiting for the schedule).
+  workflow_dispatch:
+
+# Allow the job to write back to the repo (so it can save seen.json).
+permissions:
+  contents: write
+
+# Never let two runs overlap — they'd fight over saving seen.json.
+concurrency:
+  group: monitor
+  cancel-in-progress: false
+
+jobs:
+  check:
+    runs-on: ubuntu-latest   # a free Linux machine GitHub gives us
+    steps:
+      # 1) Download our code onto the machine (including the saved seen.json).
+      - uses: actions/checkout@v4
+
+      # 2) Install Python 3.12.
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      # 3) Run a single news check. The ntfy topic comes from a private
+      #    repository Secret, injected as an environment variable.
+      - name: Run news check
+        env:
+          NTFY_TOPIC: ${{ secrets.NTFY_TOPIC }}
+        run: python step3_monitor.py
+
+      # 4) Save updated memory back into the repo, so the next run remembers
+      #    what we've already alerted on. If nothing changed, skip the commit.
+      - name: Save memory (seen.json)
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add seen.json
+          git diff --staged --quiet || git commit -m "Update seen stories [skip ci]"
+          git push

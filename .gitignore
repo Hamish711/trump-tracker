@@ -1,0 +1,7 @@
+# Python's compiled cache — machine-specific, never share it.
+__pycache__/
+*.pyc
+
+# Your PRIVATE ntfy topic. Kept off GitHub so strangers can't spam your
+# phone. On the cloud we pass it via a GitHub Secret instead.
+ntfy_topic.txt
