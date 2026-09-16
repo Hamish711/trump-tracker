@@ -1,8 +1,4 @@
 {
-  "b8f03a48b162b285": {
-    "title": "Micron Stock Closes Above $1,000 After Key Move by Trump Administration - Barron's",
-    "first_seen": "2026-08-17T20:59:17.653318+00:00"
-  },
   "eb27582976da2251": {
     "title": "Opinion | The government\u2019s Intel bet was even worse than expected - The Washington Post",
     "first_seen": "2026-08-18T13:52:44.578680+00:00"
@@ -270,5 +266,9 @@
   "e24653acc8479225": {
     "title": "Nvidia Stock Rises as Meta\u2019s Zuckerberg Weighs In on AI Safety After Trump - Barron's",
     "first_seen": "2026-09-16T16:12:13.152401+00:00"
+  },
+  "b83c8c598718b50a": {
+    "title": "Nvidia CEO Asks Trump To Reassure Everyone On AI - Kotaku",
+    "first_seen": "2026-09-16T22:16:18.359456+00:00"
   }
 }
